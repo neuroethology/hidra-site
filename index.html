@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HiDRA: High-Dimensional Rodent Annotator</title>
+  <meta name="description" content="HiDRA is a mouse behavior classifier trained on annotated video from 15 laboratories. It scores 33 social and solitary behaviors from pose tracking and works on data from labs it never saw during training.">
+  <meta property="og:title" content="HiDRA: High-Dimensional Rodent Annotator">
+  <meta property="og:description" content="A mouse behavior classifier trained across 15 labs. 33 behaviors, 82 classifier heads, open weights.">
+  <meta property="og:image" content="https://hidra.science/assets/fig/lab-mosaic.png">
+  <meta property="og:url" content="https://hidra.science/">
+  <link rel="canonical" href="https://hidra.science/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="assets/icon-180.png" sizes="180x180" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;650;700;750&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="nav-brand" href="#top"><img src="assets/icon-180.png" width="28" height="28" alt="">HiDRA</a>
+    <div class="nav-links">
+      <a href="#different">Why HiDRA</a>
+      <a href="#dataset">Data</a>
+      <a href="#consortium">Consortium</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#start">Get started</a>
+      <a href="#cite">Cite</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================== HERO ============================== -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-top">
+    <div class="hero-text">
+    <h1>HiDRA<span class="expand">The High-Dimensional Rodent Annotator</span></h1>
+    <p class="lede">A behavior classifier for freely interacting mice, trained on annotated video from 15 laboratories. HiDRA scores 33 social and solitary behaviors from pose tracking, and it works on data from labs it never saw during training.</p>
+
+    <div class="btns">
+      <!-- TODO: replace href with the preprint / journal URL and remove aria-disabled -->
+      <a class="btn primary" href="#" aria-disabled="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
+        Paper (coming soon)
+      </a>
+      <a class="btn" href="https://github.com/neuroethology/HiDRA">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+        Code
+      </a>
+      <a class="btn" href="https://huggingface.co/Neuroethology/HiDRA">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>
+        Model weights
+      </a>
+      <a class="btn" href="http://kaggle.com/competitions/MABe-mouse-behavior-detection/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        DooM dataset
+      </a>
+      <a class="btn" href="#cite">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.76-2-2-2H4c-1.25 0-2 .75-2 1.97V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .01-1 1.03V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.76-2-2-2h-4c-1.25 0-2 .75-2 1.97V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+        Cite
+      </a>
+    </div>
+    </div>
+    <div class="hero-logo"><img src="assets/logo.webp" width="1254" height="1254" alt="HiDRA logo: three mouse heads on one body."></div>
+    </div>
+
+    <div class="paper">
+      <div class="paper-title">A community benchmark enables high-resolution, cross-lab quantification of mouse social behavior</div>
+      <div class="authors">
+        Markus Marks<sup>1</sup>, Ruize Yang<sup>2,3</sup>, Ziang Liu<sup>4</sup>, Ryan Ye<sup>4</sup>, Lara K. Scaria<sup>5</sup>,
+        Sam A. Golden<sup>6,*</sup>, Jennifer J. Sun<sup>4,*</sup>, Talmo Pereira<sup>5,*</sup>, Ann Kennedy<sup>7,*</sup>,
+        and the <a href="#consortium" style="color:inherit">Days of our Mice Consortium</a>
+      </div>
+      <div class="affils">
+        <sup>1</sup>Caltech &nbsp; <sup>2</sup>Shirley Ryan AbilityLab &nbsp; <sup>3</sup>Northwestern University &nbsp;
+        <sup>4</sup>Cornell University &nbsp; <sup>5</sup>Salk Institute for Biological Studies &nbsp;
+        <sup>6</sup>University of Washington &nbsp; <sup>7</sup>Scripps Research &nbsp; <sup>*</sup>Corresponding authors
+      </div>
+    </div>
+
+    <figure class="hero-media">
+      <img src="assets/fig/lab-mosaic.png" width="1268" height="592" alt="A mosaic of video frames from the 15 contributing labs, showing mice in many different arenas, lighting conditions and camera setups.">
+      <figcaption><span>Sample frames from the 15 labs that contributed to the DooM dataset, with one frame per experimental setup. Arenas, cameras, lighting, strains and pose skeletons all differ.</span></figcaption>
+    </figure>
+  </div>
+</header>
+
+<div class="stats" aria-label="Key numbers">
+  <div class="wrap">
+    <div class="stat"><b>15</b><span>contributing labs</span></div>
+    <div class="stat"><b>180&nbsp;h</b><span>of annotated video</span></div>
+    <div class="stat"><b>33</b><span>behaviors</span></div>
+    <div class="stat"><b>82</b><span>classifier heads</span></div>
+    <div class="stat"><b>1,781</b><span>challenge participants from 85 countries</span></div>
+  </div>
+</div>
+
+<!-- ============================== DEMO VIDEO ============================== -->
+<section id="demo">
+  <div class="wrap">
+    <figure class="media" data-name="demo-ethogram">
+      <div class="media-frame">
+        <video autoplay muted loop playsinline preload="metadata">
+          <source src="assets/video/demo-ethogram.mp4" type="video/mp4">
+        </video>
+        <div class="media-placeholder"><div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>
+          <strong>Video: HiDRA scoring a resident-intruder session</strong>
+          <small>Placeholder. Add <code>assets/video/demo-ethogram.mp4</code> (see VIDEOS.md).</small>
+        </div></div>
+      </div>
+      <figcaption>HiDRA predictions on a recording it was not trained on, shown as a scrolling ethogram under the video.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================== WHY DIFFERENT ============================== -->
+<section id="different" class="alt">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-aggressive)">
+      <h2>A classifier that works outside the lab that trained it</h2>
+    </div>
+    <div class="prose">
+      <p>Supervised behavior classifiers such as MARS, SimBA, JAABA and DeepEthogram can match human annotators when they have enough training examples from the setup they are used on. Each one is trained on a single lab's videos and annotations, and it does not generalize to new experimental settings. The field has ended up with one-off tools that stay in the lab that built them, and behavior scored in one lab cannot be compared directly with behavior scored in another.</p>
+      <p>HiDRA was trained on DooM, a dataset assembled from previously unshared experiments in 15 labs. Training on that variety produced a shared representation of mouse movement. Classifier heads for the same behavior, trained on different labs' annotations, converge on similar weights, and they transfer to new datasets without retraining.</p>
+    </div>
+
+    <table class="compare">
+      <thead>
+        <tr><th scope="col"><span class="visually-hidden">Property</span></th><th scope="col">Single-lab classifiers</th><th scope="col" class="hidra">HiDRA</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Training data</th>
+          <td class="old" data-label="Single-lab classifiers">One lab's annotated videos</td>
+          <td class="hidra" data-label="HiDRA">180 hours of annotated video from 15 labs, with different arenas, cameras, strains and pose skeletons</td>
+        </tr>
+        <tr>
+          <th scope="row">Features</th>
+          <td class="old" data-label="Single-lab classifiers">Hand-engineered pose features (distances, angles, velocities) or raw pixels</td>
+          <td class="hidra" data-label="HiDRA">Learned by graph neural networks trained, without labels, to predict how each keypoint moves next</td>
+        </tr>
+        <tr>
+          <th scope="row">Behaviors</th>
+          <td class="old" data-label="Single-lab classifiers">Whatever the training lab annotated</td>
+          <td class="hidra" data-label="HiDRA">33 behaviors as 82 classifiers, each one a specific lab's definition, all available at once</td>
+        </tr>
+        <tr>
+          <th scope="row">A new lab or setup</th>
+          <td class="old" data-label="Single-lab classifiers">Annotate new data and retrain</td>
+          <td class="hidra" data-label="HiDRA">Run as is. If the calls are off, recalibrate a threshold or fine-tune one head on a few annotated clips</td>
+        </tr>
+        <tr>
+          <th scope="row">Adding a behavior</th>
+          <td class="old" data-label="Single-lab classifiers">Annotate and train a new classifier</td>
+          <td class="hidra" data-label="HiDRA">Fine-tune a 258-parameter head in under 10 minutes on one GPU. The other 81 heads do not change</td>
+        </tr>
+        <tr>
+          <th scope="row">Acquisition hardware</th>
+          <td class="old" data-label="Single-lab classifiers">Tied to the training lab's camera and tracking setup</td>
+          <td class="hidra" data-label="HiDRA">Accuracy is largely independent of frame rate, video resolution and number of tracked keypoints</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== BEHAVIORS VS HEADS ============================== -->
+<section id="heads">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-appetitive)">
+      <h2>33 behaviors, 82 classifiers</h2>
+    </div>
+    <div class="wrapfig">
+      <figure class="fig float-fig">
+        <div class="fig-frame"><img src="assets/fig/calms21-raster.png" width="804" height="552" loading="lazy" alt="Raster of attack and sniff bouts on one CalMS21 video: the human annotation on top, then predictions from six labs' HiDRA classifiers."></div>
+        <figcaption><b>Six labs' heads on one CalMS21 video.</b> Top row (gt) is the human annotation. Thresholds were tuned on CalMS21, but none of these heads saw its annotations in training. IJ InvincibleJellyfish, RM ReflectiveManatee, DF DeliriousFly, LH LyricalHare, NG NiftyGoldfinch, JS JovialSwallow.</figcaption>
+      </figure>
+      <p>The 15 labs in DooM never shared a scoring manual. Between them they used 121 different names for behaviors, which we merged into 33 behaviors. Thirteen of those were scored by only one lab. The other twenty were scored by two or more labs, each working from its own operational definition.</p>
+      <p>HiDRA does not average those definitions into one consensus classifier. It trains a separate head for each lab that scored a behavior, which gives 82 heads. Attack, for example, has eight: one for each lab that annotated it.</p>
+      <p>That makes the heads useful in two ways. You can pick the head whose definition is closest to your own lab's scoring. You can also run several heads on the same video to see how different groups of annotators would have scored it. On CalMS21, six labs' attack and sniff classifiers agree on most bouts but differ in how long attack bouts run and in where attack ends and sniff begins.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== DATASET ============================== -->
+<section id="dataset" class="alt">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-investigative)">
+      <h2>Built on a community benchmark</h2>
+    </div>
+
+    <div>
+      <div class="prose">
+        <h3 style="margin-bottom:12px">The Days of our Mice dataset</h3>
+        <p>DooM contains more than 600 top-view videos of interacting mice from 15 labs, with pose tracking, metadata and frame-by-frame manual annotation. All of it comes from published or ongoing experiments, so it reflects real variation: resolution, session length, frame rate and arena size each vary by at least an order of magnitude.</p>
+        <p>We ran a two-month Kaggle challenge on DooM that drew over 30,000 submissions from 1,781 participants in 85 countries. The winning entry learned its features with self-supervised graph neural networks instead of hand-crafting them. HiDRA is a lightly modified version of that model, retrained on a refined version of the dataset.</p>
+      </div>
+      <figure class="fig">
+        <div class="fig-frame"><img src="assets/fig/doom-matrix.png" width="1560" height="798" loading="lazy" alt="Matrix of behaviors annotated per lab, colored by minutes of annotation."></div>
+        <figcaption><b>What each lab annotated.</b> Minutes of annotation for each behavior (columns) in each lab (rows). Gray rows are public datasets added for training: CRIM13 and CalMS21.</figcaption>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================== CONSORTIUM ============================== -->
+<section id="consortium" class="dark">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-aggressive)">
+      <h2>The Days of our Mice Consortium</h2>
+    </div>
+    <div class="prose consortium-intro">
+      <p>HiDRA would not exist without the 15 laboratories that shared their data. Each contributed video, pose tracking and frame-by-frame behavior annotations from its own experiments, data that had previously stayed inside the lab that collected it. Together these became the DooM dataset, which we are releasing openly alongside HiDRA.</p>
+      <p>The model began as a community effort too. It builds on the winning entry of the DooM Kaggle challenge, and several of the challenge's top-ranked participants are members of the consortium.</p>
+    </div>
+    <div class="consortium-lists">
+      <div>
+        <h3>Data contributors</h3>
+        <ul class="names">
+        <li>David J. Anderson</li>
+        <li>Eiman Azim</li>
+        <li>Dorian Battivelli</li>
+        <li>Daniel W. Bayless</li>
+        <li>Camilla Bellone</li>
+        <li>Asaf Benjamin</li>
+        <li>Joeri Bordes</li>
+        <li>Ioana Carcea</li>
+        <li>Alon Chen</li>
+        <li>Michael J. Conoscenti</li>
+        <li>Bing Dai</li>
+        <li>Elise Davis</li>
+        <li>Kaela Evans</li>
+        <li>Annegret L. Falkner</li>
+        <li>Benoit Girard</li>
+        <li>Nastacia L. Goodwin</li>
+        <li>Ryan Gorzek</li>
+        <li>Cornelius T. Gross</li>
+        <li>Chongye Han</li>
+        <li>Weizhe Hong</li>
+        <li>Marcus Intal</li>
+        <li>Jorge M. Iravedra-García</li>
+        <li>Kentaro K. Ishii</li>
+        <li>Dayu Lin</li>
+        <li>Sebastián Malagón Pérez</li>
+        <li>Mariela Mendoza</li>
+        <li>Simon R. O. Nilsson</li>
+        <li>Nguyen Phi</li>
+        <li>Tara Raam</li>
+        <li>Carlos Robles</li>
+        <li>Mathias V. Schmidt</li>
+        <li>Nirao M. Shah</li>
+        <li>Yair Shemesh</li>
+        <li>Steven A. Siegelbaum</li>
+        <li>Stefanos Stagkourakis</li>
+        <li>Garret D. Stuber</li>
+        <li>Andres Villegas</li>
+        <li>Ofer Yizhar</li>
+        <li>Moriel Zelikowsky</li>
+        <li>Xingjian Zhang</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Kaggle top-five solutions</h3>
+        <ul class="names">
+        <li>Ahmet Erdem</li>
+        <li>Daniel Krstevski</li>
+        <li>Yudai Otohigh</li>
+        <li>Matheus Pedroza</li>
+        <li>Eduardo Rocha de Andrade</li>
+        <li>Takato Yoshikawa</li>
+        </ul>
+        <p class="kaggle-thanks">We thank Addison Howard, Sohier Dane and Elizabeth Park at Kaggle for their support in running the Days of our Mice competition.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== METHOD ============================== -->
+<section id="method">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-defensive)">
+      <h2>From pose to 82 classifiers</h2>
+      <p>One shared network does almost all of the work. Each classifier is a single linear readout at the end.</p>
+    </div>
+    <div>
+      <figure class="fig">
+        <div class="fig-frame"><img src="assets/fig/architecture.png" width="1462" height="414" loading="lazy" alt="HiDRA architecture: GNN-based self-supervised feature learning, agent-target feature merging, temporal filtering with a lab ID embedding, and separate classifier heads."></div>
+      </figure>
+      <div class="steps">
+        <div class="step">
+          <h3>Pose in</h3>
+          <p>2D keypoints for up to four mice, from SLEAP or any other tracker. Skeletons differ between labs, so HiDRA uses whichever of its core body parts are present and treats the rest as missing.</p>
+        </div>
+        <div class="step">
+          <h3>Self-supervised features</h3>
+          <p>Graph neural networks over single animals and animal pairs learn to predict each keypoint's next position. This stage needs no behavior labels.</p>
+        </div>
+        <div class="step">
+          <h3>Shared supervised layers</h3>
+          <p>Features are merged for each actor-target pair of mice, then passed through recurrent temporal filtering layers conditioned on a lab embedding.</p>
+        </div>
+        <div class="step">
+          <h3>Per-lab heads</h3>
+          <p>Each (lab, behavior) pair gets its own linear readout. You choose the "attack" whose definition matches your lab's convention.</p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:15px;margin-top:20px">The released model is an ensemble of five configurations that differ in temporal resolution and number of keypoints. Their predictions are averaged.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== RESULTS ============================== -->
+<section id="results" class="alt">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-reproductive)">
+      <h2>Results</h2>
+    </div>
+
+    <!-- 1 -->
+    <article class="result">
+      <div class="split">
+        <div class="prose">
+          <h3>Accurate across the behavioral repertoire</h3>
+          <p>On the held-out DooM test set, HiDRA reaches a per-lab macro-averaged F1 score of 0.66 across all 82 classifiers. Predicted time spent in each behavior closely tracks human scoring.</p>
+          <p>For about half of the classifiers, most remaining errors are disagreements about exactly when a bout starts, within half a second of the human-annotated onset. Human annotators are inconsistent about onsets too, and HiDRA applies the same rule every time.</p>
+        </div>
+        <figure class="fig">
+          <div class="fig-frame"><img src="assets/fig/error-types.png" width="948" height="357" loading="lazy" alt="Breakdown of classifier errors into correct, jitter, extra bout, missed bout and misidentified frames for each classifier."></div>
+          <figcaption><b>Where the errors come from.</b> Frames from each classifier split into correct calls, onset jitter, extra bouts, missed bouts and misidentified behaviors.</figcaption>
+        </figure>
+      </div>
+      <figure class="fig">
+        <div class="fig-frame"><img src="assets/fig/f1-by-behavior.png" width="1422" height="444" loading="lazy" alt="Bar chart of F1 score for each of the 33 behaviors, grouped by category."></div>
+        <figcaption><b>F1 score for all 33 behaviors.</b> Points are classifiers trained on the same behavior by different labs.</figcaption>
+      </figure>
+    </article>
+
+    <!-- 2 -->
+    <article class="result">
+      <div class="split rev">
+        <div class="prose">
+          <h3>Your existing camera is good enough</h3>
+          <p>We regressed the F1 scores of all 82 classifiers against properties of their data. The amount of training data and the rarity of the behavior predicted performance. Frame rate, video resolution and the number of tracked keypoints did not.</p>
+          <p>We also swapped HiDRA's pose features for features from VideoPrism, a video foundation model. The pose-based model was better for 81 of 82 behaviors. A lab does not need a high-speed camera, a dense skeleton or a large video model to get accurate classification.</p>
+        </div>
+        <figure class="fig">
+          <div class="fig-frame"><img src="assets/fig/f1-predictors.png" width="948" height="369" loading="lazy" alt="Correlation and permutation importance of metadata features for predicting classifier F1 score."></div>
+          <figcaption><b>What predicts accuracy.</b> Left: correlation of each property with F1. Right: permutation importance in a cross-validated model. Data volume matters; frame rate, resolution and keypoint count do not.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="result">
+      <div class="prose">
+        <h3>One representation of movement, shared across labs</h3>
+        <p>A model trained on 15 labs could have learned 15 separate solutions. HiDRA did not. Every head reads out from the same 256-dimensional features, and heads for the same behavior trained on different labs' annotations are often more similar to each other than to other heads from their own lab.</p>
+        <p>This is what lets a classifier move between labs. It also gives a way to compare how labs define the same behavior.</p>
+      </div>
+      <figure class="fig">
+        <div class="fig-frame simmap" id="simmap" data-src="assets/data/head-similarity.json">
+          <div class="simmap-legend" aria-hidden="true">
+            <span>Cosine similarity</span>
+            <span class="simmap-bar"></span>
+            <span class="simmap-ticks"><i>&minus;0.2</i><i>0</i><i>0.2</i><i>0.4</i><i>0.6</i><i>0.8</i><i>1.0</i></span>
+          </div>
+          <noscript><img src="assets/fig/head-similarity.png" width="1986" height="2322" alt="Cosine similarity matrix of all classifier head weights, ordered by hierarchical clustering. Heads cluster by behavior rather than by lab."></noscript>
+        </div>
+        <figcaption><b>Heads cluster by behavior.</b> Cosine similarity between the readout weights of all 82 heads, ordered by average-linkage clustering. Labels are lab:behavior, colored by behavior category. Hover over (or tap) a cell to compare two heads, a label to see a head's closest matches, or a branch of the tree to highlight a cluster.</figcaption>
+      </figure>
+    </article>
+
+    <!-- 4 -->
+    <article class="result">
+      <div class="prose">
+        <h3>Works on data it was never trained on</h3>
+        <p>CalMS21 is a public benchmark whose behavior annotations HiDRA never saw. Applied to it, HiDRA's attack, sniff and mount classifiers agreed closely with the held-out human annotations and scored close to the top model from the original CalMS21 benchmark, which had been trained on those annotations. The HiDRA classifiers were trained by different annotators, on different videos, in different labs.</p>
+        <p>In leave-one-lab-out tests, home-cage setups with typical pose skeletons came close to the full model's performance. Setups unique to one lab, such as four-mouse arenas or unusual skeletons, scored lower and recovered with fine-tuning.</p>
+      </div>
+      <div class="fig-row" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr)">
+        <figure class="fig">
+          <div class="fig-frame"><img src="assets/fig/calms21-f1.png" width="375" height="414" loading="lazy" alt="F1 scores on CalMS21 for HiDRA classifiers compared with the top MABe 2021 model."></div>
+          <figcaption><b>Zero-shot on CalMS21.</b> Attack, sniff and mount classifiers from every lab that scored them, without and with threshold tuning, against the top model from the CalMS21 benchmark (outlined bars).</figcaption>
+        </figure>
+        <figure class="fig">
+          <div class="fig-frame"><img src="assets/fig/loo-finetune.png" width="582" height="414" loading="lazy" alt="F1 score as a function of fine-tuning data for two held-out labs."></div>
+          <figcaption><b>Held-out labs.</b> F1 as a function of annotated fine-tuning data. Lines mark the full model.</figcaption>
+        </figure>
+      </div>
+      <figure class="media" data-name="cross-lab" style="margin-top:28px">
+        <div class="media-frame">
+          <video autoplay muted loop playsinline preload="metadata">
+            <source src="assets/video/cross-lab.mp4" type="video/mp4">
+          </video>
+          <div class="media-placeholder"><div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>
+            <strong>Video: one classifier, four labs</strong>
+            <small>Placeholder. Add <code>assets/video/cross-lab.mp4</code> (see VIDEOS.md).</small>
+          </div></div>
+        </div>
+        <figcaption>A single HiDRA attack classifier running on recordings from four different setups.</figcaption>
+      </figure>
+    </article>
+
+    <!-- 5 -->
+    <article class="result">
+      <div class="prose">
+        <h3>Little annotation needed</h3>
+        <p>We tested HiDRA on a new three-mouse home-cage dataset that played no part in its development. The pretrained self-groom and sniff-genital classifiers performed well with no tuning. Fine-tuning only the output head on two annotated clips took under 10 minutes on a single GPU and improved both. The same procedure turned the head for climbing, which detected jumping down at near-chance level (F1 = 0.07), into an accurate jump-down classifier.</p>
+        <p>In human-in-the-loop annotation, reviewing HiDRA's candidate bouts replaced searching the video for them and cut annotator time 1.9- to 4.5-fold. HiDRA also tolerates poor pose estimates: with SLEAP models trained on only 100 labeled frames, attack and sniff classification had nearly reached its plateau (500 frames for mounting), while pose accuracy itself kept improving up to 10,000 frames.</p>
+      </div>
+      <figure class="fig">
+        <div class="fig-frame"><img src="assets/fig/hitl.png" width="1209" height="408" loading="lazy" alt="Human-in-the-loop schematic, F1 scores on a new lab before and after fine-tuning, and annotation effort for manual versus human-in-the-loop annotation."></div>
+        <figcaption><b>A new lab and a new behavior.</b> E: human-in-the-loop training. F: F1 on DooM, on the new lab with no tuning, and after fine-tuning; jump down had no pretrained classifier. G: annotation time per labeled bout, manual versus human-in-the-loop.</figcaption>
+      </figure>
+      <figure class="fig">
+        <div class="fig-frame"><img src="assets/fig/pose-degradation.png" width="1590" height="363" loading="lazy" alt="Pose estimates from SLEAP models trained on 10 to 10000 frames, fraction of missing keypoints, and HiDRA F1 score as a function of pose training set size."></div>
+        <figcaption><b>Tolerance to pose error.</b> H: 90% accuracy radii of SLEAP models trained on 10 to 10,000 frames. I: missing keypoints. J: HiDRA F1 on CalMS21 with each pose model.</figcaption>
+      </figure>
+    </article>
+
+    <!-- 6 -->
+    <article class="result">
+      <div class="prose">
+        <h3>Behavioral phenotypes without retraining</h3>
+        <p>We applied all of HiDRA's classifiers, unchanged, to published resident-intruder recordings of four mouse lines carrying autism-associated mutations. HiDRA reproduced the previously reported phenotypes and found differences in other behaviors. Transition analysis showed why Nlgn3 heterozygotes move from attack to approach more often: after a fight they are more likely to separate from their partner and then re-engage.</p>
+        <p>Decoders that combined HiDRA bout statistics with behavior-conditioned movement features predicted genotype as well as decoders built on keypoint-MoSeq syllables. HiDRA needs no model fitting for this, and each feature is a named behavior.</p>
+      </div>
+      <figure class="fig">
+        <div class="fig-frame"><img src="assets/fig/asd-heatmaps.png" width="1284" height="597" loading="lazy" alt="Heatmaps of Cohen's d effect sizes for genotype and housing effects on time spent in each behavior across four autism-associated mouse lines."></div>
+        <figcaption><b>Effects across 25 behaviors at once.</b> C: genotype effect (heterozygote vs. wild type) in group-housed mice. D: effect of single vs. group housing in heterozygotes. Stars mark significant differences.</figcaption>
+      </figure>
+      <div class="fig-row" style="grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr)">
+        <figure class="fig">
+          <div class="fig-frame"><img src="assets/fig/asd-transitions.png" width="780" height="363" loading="lazy" alt="Behavior transition differences in Nlgn3 heterozygotes and the probability of separation and re-engagement after an attack."></div>
+          <figcaption><b>Transitions.</b> E: transitions enriched or reduced in Nlgn3 heterozygotes. F: events within 2 s of an attack ending.</figcaption>
+        </figure>
+        <figure class="fig">
+          <div class="fig-frame"><img src="assets/fig/genotype-decoding.png" width="516" height="363" loading="lazy" alt="Leave-one-mouse-out AUC for decoding genotype from bout statistics, bouts plus kinematics, or keypoint-MoSeq."></div>
+          <figcaption><b>Genotype decoding.</b> Bout statistics, bouts plus kinematics, and keypoint-MoSeq.</figcaption>
+        </figure>
+      </div>
+      <p class="prose" style="margin-top:40px">In a second dataset, 41 male mice met a male or female intruder on three consecutive days. HiDRA matched manual scoring of how behavior changed with experience, including the distinction between mounting with and without intromission. Across the full set of classifiers it found a broad shift in resident behavior over the three days that depended on the sex of the intruder.</p>
+      <figure class="fig">
+        <div class="fig-frame"><img src="assets/fig/multiday.png" width="1305" height="618" loading="lazy" alt="Multi-day resident-intruder experiment design, comparison of HiDRA and human scoring, and time per session in six behavior categories over three days."></div>
+        <figcaption><b>Experience-dependent change.</b> H: design. I: percent of mice showing each behavior, human vs. HiDRA. J: time per session in each behavior category over days 1 to 3, for male-male and male-female pairs.</figcaption>
+      </figure>
+    </article>
+  </div>
+</section>
+
+<!-- ============================== GET STARTED ============================== -->
+<section id="start">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-nonsocial)">
+      <h2>Run HiDRA on your own tracking</h2>
+      <p>HiDRA is a Python package. Weights (about 660 MB) download from Hugging Face on first use.</p>
+    </div>
+
+    <div class="start-grid">
+      <div>
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" aria-selected="true" data-tab="cli">Command line</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="py">Python</button>
+        </div>
+        <pre data-panel="cli"><button class="copy">Copy</button><span class="k">pip install</span> \
+    <span class="s">'hidra[torch] @ git+https://github.com/neuroethology/HiDRA'</span>
+<span class="k">hidra-download-models</span>          <span class="c"># fetch weights into models/</span>
+<span class="k">hidra-predict</span> --list-heads       <span class="c"># the 82 (lab, behavior) heads</span>
+
+<span class="c"># run two heads on a folder of pose files</span>
+<span class="k">hidra-predict</span> tracking/ --out results/ \
+    --pix-per-cm 16 --fps 30 \
+    --labs GroovyShrew --actions rear,sniffall</pre>
+        <pre data-panel="py" hidden><button class="copy">Copy</button><span class="k">import</span> hidra
+
+hidra.heads(action=<span class="s">"attack"</span>)     <span class="c"># which labs have an attack head</span>
+
+hidra.predict(<span class="s">"tracking/"</span>, out=<span class="s">"results/"</span>,
+              labs=[<span class="s">"LyricalHare"</span>], actions=[<span class="s">"attack"</span>],
+              pix_per_cm=16, fps=30)
+
+bouts = hidra.bouts(<span class="s">"results/"</span>)  <span class="c"># ethogram as a DataFrame</span></pre>
+        <p class="muted" style="font-size:14.5px;margin-top:14px">Each input file produces <code>&lt;name&gt;.bouts.csv</code> (thresholded bouts with subject, target, lab and behavior) and <code>&lt;name&gt;.frames.parquet</code> (per-frame probabilities).</p>
+      </div>
+      <ul class="reqs">
+        <li><b>Pose input</b><span>Long-format parquet (<code>video_frame, mouse_id, bodypart, x, y</code>) or SLEAP <code>.slp</code> files. Up to four mice.</span></li>
+        <li><b>Keypoints</b><span>Any skeleton whose body-part names map onto HiDRA's schema. The model reads nose, ears, neck, body center, tail base and tail tip; missing ones are treated as unobserved, and extra ones are ignored.</span></li>
+        <li><b>Metadata</b><span>Pixel scale (pixels per cm) and frame rate for each recording.</span></li>
+        <li><b>Hardware</b><span>Python 3.12+ and an NVIDIA GPU. CPU works but is much slower.</span></li>
+      </ul>
+    </div>
+
+    <div class="routes">
+      <a class="route" href="https://github.com/neuroethology/HiDRA/blob/main/docs/zero-shot.md">
+        <h3>Zero-shot</h3>
+        <p>No annotation needed. Pick the heads whose definitions match yours and run them on your videos.</p>
+      </a>
+      <a class="route" href="https://github.com/neuroethology/HiDRA/blob/main/docs/fine-tuning.md">
+        <h3>Calibrate or fine-tune</h3>
+        <p>Uses a few annotated clips. Refit a decision threshold, or retrain one head on your arena and annotation style.</p>
+      </a>
+      <a class="route" href="https://github.com/neuroethology/HiDRA/blob/main/docs/new-behaviours.md">
+        <h3>Add a behavior</h3>
+        <p>Start from the closest existing head and train a new column without touching the rest.</p>
+      </a>
+      <a class="route" href="https://github.com/neuroethology/HiDRA/blob/main/docs/training.md">
+        <h3>Train from scratch</h3>
+        <p>Rebuild the self-supervised trunk or the supervised layers with the research code. Takes GPU-days.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== LIMITATIONS ============================== -->
+<section id="limitations" class="alt">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-appetitive)">
+      <h2>Limitations</h2>
+    </div>
+    <ul class="limits">
+      <li>It classifies whole-body social and solitary behavior. It does not replace classifiers for fine motor phenotypes such as gait or grasping.</li>
+      <li>It reports only behaviors that have a head. Anything else needs a new head trained on your annotations.</li>
+      <li>It tolerates noisy pose estimates but cannot correct identity swaps in tracking. Unexpected labels can help you find them.</li>
+      <li>Scoring 82 behaviors instead of one raises the multiple-comparisons burden. Choose a correction that fits your design.</li>
+      <li>It does not yet report per-bout confidence, and it works best as a way to speed up manual annotation, not replace it.</li>
+      <li>So far it has been validated only in mice.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================== CITATION ============================== -->
+<section id="cite">
+  <div class="wrap">
+    <div class="section-head" style="--k:var(--c-object)">
+      <h2>Cite this work</h2>
+    </div>
+    <div class="cite-wrap">
+<pre class="solo" id="bibtex"><button class="copy">Copy</button>@article{marks2026doom,
+  title   = {A community benchmark enables high-resolution, cross-lab
+             quantification of mouse social behavior},
+  author  = {Marks, Markus and Yang, Ruize and Liu, Ziang and Ye, Ryan and
+             Scaria, Lara K. and Golden, Sam A. and Sun, Jennifer J. and
+             Pereira, Talmo and Kennedy, Ann and
+             {Days of our Mice Consortium}},
+  year    = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>Code: <a href="https://github.com/neuroethology/HiDRA">neuroethology/HiDRA</a> &middot; Weights: <a href="https://huggingface.co/Neuroethology/HiDRA">Neuroethology/HiDRA</a> &middot; Annotation tool: <a href="https://github.com/talmolab/laras-labeler">talmolab/laras-labeler</a></span>
+      <span>Questions and bug reports: <a href="https://github.com/neuroethology/HiDRA/issues">GitHub issues</a></span>
+    </div>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Enlarged figure">
+  <button type="button" aria-label="Close">&times;</button>
+  <img alt="">
+</dialog>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/similarity.js"></script>
+</body>
+</html>
