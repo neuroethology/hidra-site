@@ -108,16 +108,16 @@
   <div class="wrap">
     <figure class="media" data-name="demo-ethogram">
       <div class="media-frame">
-        <video autoplay muted loop playsinline preload="metadata">
+        <video autoplay muted loop playsinline preload="metadata" poster="assets/video/demo-ethogram.jpg">
           <source src="assets/video/demo-ethogram.mp4" type="video/mp4">
         </video>
         <div class="media-placeholder"><div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>
-          <strong>Video: HiDRA scoring a resident-intruder session</strong>
+          <strong>Video: HiDRA scoring a four-mouse social group</strong>
           <small>Placeholder. Add <code>assets/video/demo-ethogram.mp4</code> (see VIDEOS.md).</small>
         </div></div>
       </div>
-      <figcaption>HiDRA predictions on a recording it was not trained on, shown as a scrolling ethogram under the video.</figcaption>
+      <figcaption>HiDRA scoring a four-mouse social group, shown at half speed with pose tracking overlaid. Below the video, HiDRA's predicted probability for each behavior (colored) scrolls past the human annotation (thin gray bars).</figcaption>
     </figure>
   </div>
 </section>
@@ -132,6 +132,20 @@
       <p>Supervised behavior classifiers such as MARS, SimBA, JAABA and DeepEthogram can match human annotators when they have enough training examples from the setup they are used on. Each one is trained on a single lab's videos and annotations, and it does not generalize to new experimental settings. The field has ended up with one-off tools that stay in the lab that built them, and behavior scored in one lab cannot be compared directly with behavior scored in another.</p>
       <p>HiDRA was trained on DooM, a dataset assembled from previously unshared experiments in 15 labs. Training on that variety produced a shared representation of mouse movement. Classifier heads for the same behavior, trained on different labs' annotations, converge on similar weights, and they transfer to new datasets without retraining.</p>
     </div>
+
+    <figure class="media" data-name="cross-lab" style="margin:36px 0 44px">
+      <div class="media-frame">
+        <video autoplay muted loop playsinline preload="metadata" poster="assets/video/cross-lab.jpg">
+          <source src="assets/video/cross-lab.mp4" type="video/mp4">
+        </video>
+        <div class="media-placeholder"><div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>
+          <strong>Video: one classifier, six setups</strong>
+          <small>Placeholder. Add <code>assets/video/cross-lab.mp4</code> (see VIDEOS.md).</small>
+        </div></div>
+      </div>
+      <figcaption>One classifier, CautiousGiraffe's sniff head, running without retraining on held-out recordings from five other labs and from CalMS21, whose annotations HiDRA never saw. Each trace is the predicted probability of sniffing; decision thresholds were tuned on each lab's own training videos.</figcaption>
+    </figure>
 
     <table class="compare">
       <thead>
@@ -315,7 +329,7 @@
           <p>Each (lab, behavior) pair gets its own linear readout. You choose the "attack" whose definition matches your lab's convention.</p>
         </div>
       </div>
-      <p class="muted" style="font-size:15px;margin-top:20px">The released model is an ensemble of five configurations that differ in temporal resolution and number of keypoints. Their predictions are averaged.</p>
+      <p class="prose muted" style="font-size:15px;margin-top:20px">The released model is an ensemble of five configurations that differ in temporal resolution and number of keypoints. Their predictions are averaged.</p>
     </div>
   </div>
 </section>
@@ -398,19 +412,6 @@
           <figcaption><b>Held-out labs.</b> F1 as a function of annotated fine-tuning data. Lines mark the full model.</figcaption>
         </figure>
       </div>
-      <figure class="media" data-name="cross-lab" style="margin-top:28px">
-        <div class="media-frame">
-          <video autoplay muted loop playsinline preload="metadata">
-            <source src="assets/video/cross-lab.mp4" type="video/mp4">
-          </video>
-          <div class="media-placeholder"><div>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>
-            <strong>Video: one classifier, four labs</strong>
-            <small>Placeholder. Add <code>assets/video/cross-lab.mp4</code> (see VIDEOS.md).</small>
-          </div></div>
-        </div>
-        <figcaption>A single HiDRA attack classifier running on recordings from four different setups.</figcaption>
-      </figure>
     </article>
 
     <!-- 5 -->
