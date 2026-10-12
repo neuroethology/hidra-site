@@ -116,6 +116,11 @@
         <video autoplay muted loop playsinline preload="metadata" poster="assets/video/demo-ethogram.jpg">
           <source src="assets/video/demo-ethogram.mp4" type="video/mp4">
         </video>
+        <div class="media-placeholder"><div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>
+          <strong>Video: HiDRA scoring a four-mouse social group</strong>
+          <small>Placeholder. Add <code>assets/video/demo-ethogram.mp4</code> (see VIDEOS.md).</small>
+        </div></div>
       </div>
       <figcaption>HiDRA scoring a four-mouse social group, shown at half speed with pose tracking overlaid. Below the video, annotations from 56 HiDRA classifier heads for 11 unique behaviors. Frames with majority agreement within heads are scored in the video.</figcaption>
     </figure>
@@ -138,6 +143,11 @@
         <video autoplay muted loop playsinline preload="metadata" poster="assets/video/cross-lab.jpg">
           <source src="assets/video/cross-lab.mp4" type="video/mp4">
         </video>
+        <div class="media-placeholder"><div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>
+          <strong>Video: one classifier, six setups</strong>
+          <small>Placeholder. Add <code>assets/video/cross-lab.mp4</code> (see VIDEOS.md).</small>
+        </div></div>
       </div>
       <figcaption>One classifier, CautiousGiraffe's sniff head, running without retraining on held-out recordings from five other labs and from CalMS21, whose annotations HiDRA never saw. Each trace is the predicted probability of sniffing; decision thresholds were tuned on each lab's own training videos.</figcaption>
     </figure>
@@ -217,6 +227,21 @@
         <div class="fig-frame"><img src="assets/fig/doom-matrix.png" width="1560" height="798" loading="lazy" alt="Matrix of behaviors annotated per lab, colored by minutes of annotation."></div>
         <figcaption><b>What each lab annotated.</b> Minutes of annotation for each behavior (columns) in each lab (rows). Gray rows are public datasets added for training: CRIM13 and CalMS21.</figcaption>
       </figure>
+    </div>
+
+    <div class="prose" style="margin-top:72px">
+      <h3 style="margin-bottom:12px">Explore the dataset</h3>
+      <p>Browse each lab's recording setup and the behaviors it annotated, or pick a behavior to compare how different labs defined it. Definitions are quoted from the labs' own documentation.</p>
+    </div>
+    <div class="doom" id="doom" data-src="assets/data/doom-labs.json">
+      <div class="doom-tabs" role="tablist">
+        <button type="button" class="doom-tab" role="tab" data-mode="labs" aria-selected="true">By lab</button>
+        <button type="button" class="doom-tab" role="tab" data-mode="behaviors" aria-selected="false">By behavior</button>
+      </div>
+      <div class="doom-body">
+        <nav class="doom-nav"></nav>
+        <div class="doom-panel" aria-live="polite"></div>
+      </div>
     </div>
 
   </div>
@@ -573,5 +598,6 @@ bouts = hidra.bouts(<span class="s">"results/"</span>)  <span class="c"># ethogr
 
 <script src="assets/js/main.js"></script>
 <script src="assets/js/similarity.js"></script>
+<script src="assets/js/doom.js"></script>
 </body>
 </html>
