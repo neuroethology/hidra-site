@@ -433,3 +433,64 @@ dialog.lightbox button { position: fixed; top: 16px; right: 20px; font-size: 28p
   .simmap-svg { min-width: 680px; }
   .simmap-legend { position: sticky; left: 0; justify-content: start; }
 }
+
+/* ---------- DooM dataset explorer ---------- */
+.doom { margin-top: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.doom-tabs { display: flex; gap: 4px; padding: 10px 10px 0; border-bottom: 1px solid var(--line); background: var(--bg-alt); }
+.doom-tab { font: 600 14px/1 var(--sans); padding: 11px 16px; border: 1px solid transparent; border-bottom: 0; border-radius: 8px 8px 0 0; background: none; color: var(--muted); cursor: pointer; margin-bottom: -1px; }
+.doom-tab[aria-selected="true"] { background: var(--surface); color: var(--text); border-color: var(--line); }
+.doom-body { display: grid; grid-template-columns: 244px minmax(0, 1fr); min-height: 560px; }
+.doom-nav { border-right: 1px solid var(--line); padding: 10px; max-height: 720px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+.doom-nav button {
+  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; cursor: pointer;
+  font: 500 14px/1.25 var(--sans); color: var(--text); background: none; border: 0; border-radius: 7px; padding: 8px 10px;
+}
+.doom-nav button small { margin-left: auto; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.doom-nav button i { flex: none; width: 9px; height: 9px; border-radius: 3px; background: var(--c); }
+.doom-nav button:hover { background: var(--bg-alt); }
+.doom-nav button[aria-pressed="true"] { background: var(--navy); color: #fff; }
+.doom-nav button[aria-pressed="true"] small { color: rgba(255, 255, 255, .7); }
+.doom-panel { padding: 24px 28px 28px; min-width: 0; }
+.doom-lab { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 28px; align-items: start; }
+.doom-frame { position: relative; margin: 0; background: #0b1020; border-radius: 8px; overflow: hidden; aspect-ratio: 4 / 3; }
+.doom-frame img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 50%; }
+.doom-frame img[src$="/LyricalHare.jpg"] { height: 200%; }  /* top cage only, as in its thumbnail */
+.doom-lab h3 { font-size: 22px; margin-bottom: 12px; }
+.doom-stats { margin: 0; display: grid; grid-template-columns: 1fr; font-size: 14px; }
+.doom-stats div { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.doom-stats dt { color: var(--muted); }
+.doom-stats dd { margin: 0; }
+.doom-sub { font: 650 16px/1.3 var(--display); margin: 28px 0 10px; }
+.doom-sub span, .doom-bh span { font: 400 13.5px/1.4 var(--sans); color: var(--muted); margin-left: 8px; }
+.doom-rows { display: grid; gap: 0; }
+.doom-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+.doom-chip { display: inline-flex; align-items: center; gap: 7px; font: 600 13.5px/1.2 var(--sans); align-self: start; }
+.doom-chip::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); flex: none; }
+.doom-def { margin: 0; padding-left: 1.1em; line-height: 1.55; }
+.doom-def li + li { margin-top: 4px; }
+.doom-more summary { cursor: pointer; color: var(--link); font-size: 13.5px; margin-top: 6px; }
+.doom-more[open] summary { margin-bottom: 4px; }
+.doom-none { margin: 0; color: var(--muted); font-style: italic; font-size: 14px; }
+.doom-bh { display: flex; flex-wrap: wrap; align-items: baseline; font-size: 22px; margin-bottom: 18px; }
+.doom-bh .doom-chip { font-size: 22px; font-family: var(--display); }
+.doom-bh .doom-chip::before { width: 14px; height: 14px; border-radius: 4px; }
+.doom-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.doom-card { border: 1px solid var(--line); border-radius: 8px; padding: 14px; font-size: 14px; background: var(--bg); }
+.doom-card header { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+/* thumbnail: whole frame scaled to fill the box, trimmed equally from both sides of the longer dimension */
+.doom-thumb { flex: none; width: 64px; height: 48px; border-radius: 5px; overflow: hidden; background: #0b1020; }
+.doom-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+/* LyricalHare's frame stacks two cages; its thumbnail shows only the upper half (the top cage) */
+.doom-thumb img[src$="/LyricalHare.jpg"] { height: 200%; }
+.doom-card header b { display: block; font-size: 15px; }
+.doom-card header small { color: var(--muted); font-size: 12.5px; }
+@media (max-width: 760px) {
+  .doom-body { grid-template-columns: 1fr; min-height: 0; }
+  .doom-nav { flex-direction: row; overflow-x: auto; max-height: none; border-right: 0; border-bottom: 1px solid var(--line); }
+  .doom-nav button { width: auto; flex: none; }
+  .doom-nav button small { margin-left: 6px; }
+  .doom-panel { padding: 18px 16px 22px; }
+  .doom-lab { grid-template-columns: 1fr; gap: 16px; }
+  .doom-row { grid-template-columns: 1fr; gap: 6px; }
+  .doom-stats div { grid-template-columns: 110px minmax(0, 1fr); }
+}
