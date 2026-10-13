@@ -174,12 +174,12 @@
         <tr>
           <th scope="row">A new lab or setup</th>
           <td class="old" data-label="Single-lab classifiers">Annotate new data and retrain</td>
-          <td class="hidra" data-label="HiDRA">Run as is. If the calls are off, recalibrate a threshold or fine-tune one head on a few annotated clips</td>
+          <td class="hidra" data-label="HiDRA">Run as is. If annotations are off, recalibrate a threshold or fine-tune one head on a few annotated clips</td>
         </tr>
         <tr>
           <th scope="row">Adding a behavior</th>
           <td class="old" data-label="Single-lab classifiers">Annotate and train a new classifier</td>
-          <td class="hidra" data-label="HiDRA">Fine-tune a 258-parameter head in under 10 minutes on one GPU. The other 81 heads do not change</td>
+          <td class="hidra" data-label="HiDRA">Fine-tune a new 258-parameter head in under 10 minutes on one GPU, without affecting performance of the remaining classifiers</td>
         </tr>
         <tr>
           <th scope="row">Acquisition hardware</th>
@@ -215,8 +215,8 @@
         <div class="fig-frame"><img src="assets/fig/calms21-raster.png" width="804" height="552" loading="lazy" alt="Raster of attack and sniff bouts on one CalMS21 video: the human annotation on top, then predictions from six labs' HiDRA classifiers."></div>
         <figcaption><b>Six labs' heads on one CalMS21 video.</b> Top row (gt) is the human annotation. Thresholds were tuned on CalMS21, but none of these heads saw its annotations in training. IJ InvincibleJellyfish, RM ReflectiveManatee, DF DeliriousFly, LH LyricalHare, NG NiftyGoldfinch, JS JovialSwallow.</figcaption>
       </figure>
-      <p>The 15 labs in DooM never shared a scoring manual. Between them they used 121 different names for behaviors, which we merged into 33 behaviors. Thirteen of those were scored by only one lab. The other twenty were scored by two or more labs, each working from its own operational definition.</p>
-      <p>HiDRA does not average those definitions into one consensus classifier. It trains a separate head for each lab that scored a behavior, which gives 82 heads. Attack, for example, has eight: one for each lab that annotated it.</p>
+      <p>The 15 labs in DooM never shared a scoring manual. Between them they used 121 different names for behaviors, which we merged into 33 distinct behaviors: thirteen scored by only one lab, the rest by two or more labs each working from its own operational definition.</p>
+      <p>Importantly, HiDRA does not average definitions into a consensus classifier. Instead, it trains a separate head for each lab that scored a behavior, which gives 82 heads. Attack, for example, has eight: one for each lab that annotated it.</p>
       <p>That makes the heads useful in two ways. You can pick the head whose definition is closest to your own lab's scoring. You can also run several heads on the same video to see how different groups of annotators would have scored it. On CalMS21, six labs' attack and sniff classifiers agree on most bouts but differ in how long attack bouts run and in where attack ends and sniff begins.</p>
     </div>
   </div>
@@ -266,7 +266,7 @@
       <h2>The Days of our Mice Consortium</h2>
     </div>
     <div class="prose consortium-intro">
-      <p>HiDRA would not exist without the 15 laboratories that shared their data. Each contributed video, pose tracking and frame-by-frame behavior annotations from its own experiments, data that had previously stayed inside the lab that collected it. Together these became the DooM dataset, which we are releasing openly alongside HiDRA.</p>
+      <p>HiDRA would not exist without the 15 laboratories that shared their data. Each contributed previously unshared video, pose tracking and frame-by-frame behavior annotations from its own experiments. Together these became the DooM dataset, which we are releasing openly alongside HiDRA.</p>
       <p>The model began as a community effort too. It builds on the winning entry of the DooM Kaggle challenge, and several of the challenge's top-ranked participants are members of the consortium.</p>
     </div>
     <div class="consortium-lists">
@@ -337,7 +337,7 @@
   <div class="wrap">
     <div class="section-head" style="--k:var(--c-defensive)">
       <h2>From pose to 82 classifiers</h2>
-      <p>One shared network does almost all of the work. Each classifier is a single linear readout at the end.</p>
+      <p>HiDRA consists of a core shared network that learns the dynamics of mouse movement, with each behavior classifier a simple threshold-linear readout at the end.</p>
     </div>
     <div>
       <figure class="fig">
@@ -381,10 +381,6 @@
           <p>On the held-out DooM test set, HiDRA reaches a per-lab macro-averaged F1 score of 0.66 across all 82 classifiers. Predicted time spent in each behavior closely tracks human scoring.</p>
           <p>For about half of the classifiers, most remaining errors are disagreements about exactly when a bout starts, within half a second of the human-annotated onset. Human annotators are inconsistent about onsets too, and HiDRA applies the same rule every time.</p>
         </div>
-        <figure class="fig">
-          <div class="fig-frame"><img src="assets/fig/error-types.png" width="948" height="357" loading="lazy" alt="Breakdown of classifier errors into correct, jitter, extra bout, missed bout and misidentified frames for each classifier."></div>
-          <figcaption><b>Where the errors come from.</b> Frames from each classifier split into correct calls, onset jitter, extra bouts, missed bouts and misidentified behaviors.</figcaption>
-        </figure>
       </div>
       <figure class="fig">
         <div class="fig-frame"><img src="assets/fig/f1-by-behavior.png" width="1422" height="444" loading="lazy" alt="Bar chart of F1 score for each of the 33 behaviors, grouped by category."></div>
@@ -398,7 +394,7 @@
         <div class="prose">
           <h3>Your existing camera is good enough</h3>
           <p>We regressed the F1 scores of all 82 classifiers against properties of their data. The amount of training data and the rarity of the behavior predicted performance. Frame rate, video resolution and the number of tracked keypoints did not.</p>
-          <p>We also swapped HiDRA's pose features for features from VideoPrism, a video foundation model. The pose-based model was better for 81 of 82 behaviors. A lab does not need a high-speed camera, a dense skeleton or a large video model to get accurate classification.</p>
+          <p>We also swapped HiDRA's pose features for features from VideoPrism, a video foundation model. The pose-based model was better for 80 of 82 behaviors. A lab does not need a high-speed camera, a dense skeleton or a large video model to get accurate classification.</p>
         </div>
         <figure class="fig">
           <div class="fig-frame"><img src="assets/fig/f1-predictors.png" width="948" height="369" loading="lazy" alt="Correlation and permutation importance of metadata features for predicting classifier F1 score."></div>
@@ -410,9 +406,9 @@
     <!-- 3 -->
     <article class="result">
       <div class="prose">
-        <h3>One representation of movement, shared across labs</h3>
-        <p>A model trained on 15 labs could have learned 15 separate solutions. HiDRA did not. Every head reads out from the same 256-dimensional features, and heads for the same behavior trained on different labs' annotations are often more similar to each other than to other heads from their own lab.</p>
-        <p>This is what lets a classifier move between labs. It also gives a way to compare how labs define the same behavior.</p>
+        <h3>HiDRA learns a shared representation of animal movement</h3>
+        <p>Deep learnimg models are highly flexible: a model trained on 15 labs could have learned 15 separate, lab-specific representations of animal movement. Instead, HiDRA heads for the same behavior trained on different labs' annotations are often more similar to each other than to other heads from their own lab.</p>
+        <p>This shared representation allows HiDRA classifiers to be transferred between labs, and also gives a way to compare how labs define the same behavior.</p>
       </div>
       <figure class="fig">
         <div class="fig-frame simmap" id="simmap" data-src="assets/data/head-similarity.json">
@@ -423,7 +419,7 @@
           </div>
           <noscript><img src="assets/fig/head-similarity.png" width="1986" height="2322" alt="Cosine similarity matrix of all classifier head weights, ordered by hierarchical clustering. Heads cluster by behavior rather than by lab."></noscript>
         </div>
-        <figcaption><b>Heads cluster by behavior.</b> Cosine similarity between the readout weights of all 82 heads, ordered by average-linkage clustering. Labels are lab:behavior, colored by behavior category. Hover over (or tap) a cell to compare two heads, a label to see a head's closest matches, or a branch of the tree to highlight a cluster.</figcaption>
+        <figcaption><b>Interactive cluster analysis of HiDRA classifier heads.</b> Matrix shows cosine similarity between the readout weights of all 82 heads, ordered by average-linkage clustering. Labels are lab:behavior, colored by behavior category. Hover over (or tap) a cell to compare two heads, a label to see a head's closest matches, or a branch of the tree to highlight a cluster.</figcaption>
       </figure>
     </article>
 
@@ -450,8 +446,8 @@
     <article class="result">
       <div class="prose">
         <h3>Human-in-the-loop annotation</h3>
-        <p>We tested HiDRA on a new three-mouse home-cage dataset that played no part in its development. The pretrained self-groom and sniff-genital classifiers performed well with no tuning. Fine-tuning only the output head on two annotated clips took under 10 minutes on a single GPU and improved both. The same procedure turned the head for climbing, which detected jumping down at near-chance level (F1 = 0.07), into an accurate jump-down classifier.</p>
-        <p>In human-in-the-loop annotation, reviewing HiDRA's candidate bouts replaced searching the video for them and cut annotator time 1.9- to 4.5-fold. HiDRA also tolerates poor pose estimates: with SLEAP models trained on only 100 labeled frames, attack and sniff classification had nearly reached its plateau (500 frames for mounting), while pose accuracy itself kept improving up to 10,000 frames.</p>
+        <p>We tested fine-tuning of HiDRA classifiers on a new three-mouse home-cage dataset not seen during training. The pretrained self-groom and sniff-genital classifiers already performed well with no tuning, and fine-tuning only the output head on two annotated clips took under 10 minutes on a single GPU and improved both. The same procedure turned the head for climbing, which detected jumping down at near-chance level (F1 = 0.07), into an accurate jump-down classifier.</p>
+        <p>In human-in-the-loop annotation, reviewing HiDRA's candidate bouts replaced searching the video for them and cut annotator time 1.5- to 2.9-fold. HiDRA also tolerates poor pose estimates: with SLEAP models trained on only 100 labeled frames, attack and sniff classification had nearly reached its plateau (500 frames for mounting), while pose accuracy itself kept improving up to 10,000 frames.</p>
       </div>
       <figure class="fig">
         <div class="fig-frame"><img src="assets/fig/hitl.png" width="1209" height="408" loading="lazy" alt="Human-in-the-loop schematic, F1 scores on a new lab before and after fine-tuning, and annotation effort for manual versus human-in-the-loop annotation."></div>
